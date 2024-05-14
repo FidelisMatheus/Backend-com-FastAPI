@@ -1,0 +1,64 @@
+Diferentes rotas para o mesmo fim
+
+#decorator - @
+@app.get("/") 
+async def root():
+    return {"message": "Hello World"}
+
+
+@app.get("/profile")
+async def profile():
+    return {"nome": "Matheus Fidelis"}
+
+
+@app.post("/profile")
+async def signup():
+    return {"mensagem": "Perfil criado com sucesso"}
+
+
+@app.put("/put")
+async def update():
+    return {"mensagem": "Perfil autalizado com sucesso"}
+
+
+@app.delete("/delete")
+async def delete():
+    return {"mensagem": "Perfil deletado com sucesso"}
+
+### Para passar parametros nas rotas fazemos assim:
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: Union[str, None] = None):
+    return {"item_id": item_id, "q": q}
+
+
+@app.get("/saudacao/{nome}") #decorator - @
+async def root(nome: str):
+    texto = f'Olá { nome }, tudo em paz?!'
+
+    return {'mensagem': texto}
+
+
+@app.get('/quadrado/{numero}')
+def quadrado(numero: int):
+    resultado = numero * numero
+    texto= f'O quadrado de {numero} é {resultado}'
+
+    return {"mensagem": texto}
+
+### Query Strings
+
+@app.get('/dobro') #?nome=valor
+def dobro(valor: int):
+    resultado = 2 * valor
+    return {'resultado': f'O dobro do {valor} é {resultado}'}
+
+# http://localhost:8000/dobro?valor=4
+
+@app.get('/area-retangulo')
+def area_retangulo(largura: int, altura:int = 1):
+    area = largura * altura
+    return {'area': area}
+
+# http://localhost:8000/area-retangulo?largura=5&altura=6
+
