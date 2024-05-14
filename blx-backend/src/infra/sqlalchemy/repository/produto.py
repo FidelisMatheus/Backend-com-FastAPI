@@ -1,0 +1,36 @@
+from sqlalchemy.orm import Session
+from hello.main import produtos
+from src.schemas import schemas
+from src.infra.sqlalchemy.models import models
+
+
+class RepositorioProduto:
+
+    def __init__(self, db: Session):
+        self.db = db
+
+    # pegamos o schema Produto e transformamos em um Modelo Produto
+    # assim então salvamos no BD
+    def criar(self, produto: schemas.Produto):
+        db_produto = models.Produto(
+            nome=produto.nome,
+            detalhes=produto.detalhes,
+            preco=produto.preco,
+            disponivel=produto.disponivel,
+        )
+
+        self.db.add(db_produto)
+        self.db.commit()
+        self.db.refresh(db_produto)
+
+        return db_produto
+
+    def listar(self):
+        produtos = self.db.query(models.Produto).all()
+        return produtos
+
+    def obter(self):
+        pass
+
+    def remover(self):
+        pass

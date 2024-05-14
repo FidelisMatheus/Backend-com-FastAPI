@@ -28,3 +28,14 @@ origins = [
 ]
 
 Para liberar o CORS necessita colocar dentro do origins
+
+# 16 - Repositório e Modelos ORM
+
+Schema é o que transita entre Request e Response - JSON
+Model é o que realmente salvar no BD 
+Assim desta forma pegamos um objeto mandado pela Response para então conseguirmos salvar em nosso banco
+
+def criar(self, produto: schemas.Produto):
+    db_produto = models.Produto()
+
+No criar recebemos o produto schema e ai dps pegamos o modelo do produto !
