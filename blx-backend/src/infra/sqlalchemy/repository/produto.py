@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from hello.main import produtos
 from src.schemas import schemas
 from src.infra.sqlalchemy.models import models
 
