@@ -39,3 +39,6 @@ def criar(self, produto: schemas.Produto):
     db_produto = models.Produto()
 
 No criar recebemos o produto schema e ai dps pegamos o modelo do produto !
+
+# BLX - Iniciar aplicação
+uvicorn src.server:app --reload --reload-dir=src
