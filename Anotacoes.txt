@@ -50,3 +50,8 @@ uvicorn src.server:app --reload --reload-dir=src
 # Response model
 Serve para forçar o tipo de retorno da aplicação - Meio que força que ao retornar um certo item
 retorne no schema que eu passar
+
+# Aula 24 - Utilizar Migrations em nossa aplicação !
+Utiliza-se o alembic no SQLAlchemy
+Instalei pelo powershell admin -> pip install alembic
+Depois iniciamos na aplicação blx - alembic init alembic

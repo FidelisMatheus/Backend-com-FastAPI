@@ -3,6 +3,6 @@
   "python.analysis.typeCheckingMode": "basic",
   "files.exclude": {
     "**/__pycache__": true,
-    "**/__init__": false
+    "**/__init__.py": true
   },
 }
