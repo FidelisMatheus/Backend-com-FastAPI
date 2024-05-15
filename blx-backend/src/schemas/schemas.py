@@ -26,6 +26,15 @@ class Produto(BaseModel):
         from_attributes = True
 
 
+class ProdutoSimples(BaseModel):
+    id: Optional[str] = None
+    nome: str
+    preco: float
+
+    class Config:
+        from_attributes = True
+
+
 class Pedido(BaseModel):
     id: Optional[str] = None
     usuario: Usuario

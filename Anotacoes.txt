@@ -46,3 +46,7 @@ uvicorn src.server:app --reload --reload-dir=src
 # Status code
 200 - success / 201 - Success Post
 400 - Client error
+
+# Response model
+Serve para forçar o tipo de retorno da aplicação - Meio que força que ao retornar um certo item
+retorne no schema que eu passar
