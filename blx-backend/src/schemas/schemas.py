@@ -23,7 +23,7 @@ class Produto(BaseModel):
     disponivel: bool = False
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Pedido(BaseModel):
