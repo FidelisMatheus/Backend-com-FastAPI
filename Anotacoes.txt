@@ -42,3 +42,7 @@ No criar recebemos o produto schema e ai dps pegamos o modelo do produto !
 
 # BLX - Iniciar aplicação
 uvicorn src.server:app --reload --reload-dir=src
+
+# Status code
+200 - success / 201 - Success Post
+400 - Client error
