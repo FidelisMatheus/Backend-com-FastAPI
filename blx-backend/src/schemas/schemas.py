@@ -10,9 +10,9 @@ class Usuario(BaseModel):
     id: Optional[str] = None
     nome: str
     telefone: str
-    meus_produtos: List[Produto]
-    minhas_vendas: List[Pedido]
-    meus_pedidos: List[Pedido]
+    # meus_produtos: List[Produto]
+    # minhas_vendas: List[Pedido]
+    # meus_pedidos: List[Pedido]
 
 
 class Produto(BaseModel):
@@ -27,12 +27,8 @@ class Produto(BaseModel):
 
 
 class ProdutoSimples(BaseModel):
-    id: Optional[str] = None
     nome: str
     preco: float
-
-    class Config:
-        from_attributes = True
 
 
 class Pedido(BaseModel):
