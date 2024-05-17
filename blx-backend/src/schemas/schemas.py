@@ -11,10 +11,19 @@ class Usuario(BaseModel):
     nome: str
     senha: str
     telefone: str
-    # produtos: List[Produto] = []
+    produtos: List[ProdutoSimples] = []
 
     # minhas_vendas: List[Pedido]
     # meus_pedidos: List[Pedido]
+    class Config:
+        from_attributes = True
+
+
+class UsuarioSimples(BaseModel):
+    id: Optional[int] = None
+    nome: str
+    telefone: str
+
     class Config:
         from_attributes = True
 
@@ -25,16 +34,18 @@ class Produto(BaseModel):
     detalhes: str
     preco: float
     disponivel: bool = False
-    usuario_id: int
-    usuario: Optional[Usuario] = None
+    usuario_id: Optional[int] = None
+    usuario: Optional[UsuarioSimples] = None
 
     class Config:
         from_attributes = True
 
 
 class ProdutoSimples(BaseModel):
+    id: Optional[int] = None
     nome: str
     preco: float
+    disponivel: bool
 
 
 class Pedido(BaseModel):

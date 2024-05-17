@@ -1,5 +1,6 @@
 from typing import Sequence
 from fastapi import FastAPI, Depends, status
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from src.schemas.schemas import Produto, ProdutoSimples, Usuario
 from src.infra.sqlalchemy.config.database import criar_bd, get_db
@@ -9,6 +10,20 @@ from src.infra.sqlalchemy.repository.repositorio_usuario import RepositorioUsuar
 # criar_bd()
 
 appl = FastAPI()
+
+# CORS
+
+origins = [
+    "http://localhost:3000",
+]
+
+appl.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # PRODUIOS
 
@@ -25,9 +40,10 @@ async def listar_produtos(db: Session = Depends(get_db)) -> Sequence[Produto]:
     return produtos
 
 
-@appl.put("/produtos", response_model=Produto)
-def editar_usuario(produto: Produto, session: Session = Depends(get_db)):
-    RepositorioProduto(session).editar(produto)
+@appl.put("/produtos/{id}", response_model=ProdutoSimples)
+def editar_usuario(id: int, produto: Produto, session: Session = Depends(get_db)):
+    RepositorioProduto(session).editar(id, produto)
+    produto.id = id
     return produto
 
 
@@ -40,8 +56,8 @@ def remover_produto(id: int, session: Session = Depends(get_db)):
 # USUÁRIOS
 
 
-@appl.post("/usuarios", status_code=status.HTTP_201_CREATED)
-def criar_usuario(usuario: Usuario, session: Session = Depends(get_db)):
+@appl.post("/signup", status_code=status.HTTP_201_CREATED)
+def signup(usuario: Usuario, session: Session = Depends(get_db)):
     usuario_criado = RepositorioUsuario(session).criar(usuario)
     return usuario_criado
 
