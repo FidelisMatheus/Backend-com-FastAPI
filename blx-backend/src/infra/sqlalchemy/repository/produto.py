@@ -16,6 +16,7 @@ class RepositorioProduto:
             detalhes=produto.detalhes,
             preco=produto.preco,
             disponivel=produto.disponivel,
+            usuario_id=produto.usuario_id,
         )
 
         self.db.add(db_produto)

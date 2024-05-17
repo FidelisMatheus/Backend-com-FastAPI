@@ -7,20 +7,26 @@ from typing import Optional, List
 
 
 class Usuario(BaseModel):
-    id: Optional[str] = None
+    id: Optional[int] = None
     nome: str
+    senha: str
     telefone: str
-    # meus_produtos: List[Produto]
+    # produtos: List[Produto] = []
+
     # minhas_vendas: List[Pedido]
     # meus_pedidos: List[Pedido]
+    class Config:
+        from_attributes = True
 
 
 class Produto(BaseModel):
-    id: Optional[str] = None
+    id: Optional[int] = None
     nome: str
     detalhes: str
     preco: float
     disponivel: bool = False
+    usuario_id: int
+    usuario: Optional[Usuario] = None
 
     class Config:
         from_attributes = True
