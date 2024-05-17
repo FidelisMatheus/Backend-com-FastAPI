@@ -3,8 +3,8 @@ from fastapi import FastAPI, Depends, status
 from sqlalchemy.orm import Session
 from src.schemas.schemas import Produto, ProdutoSimples, Usuario
 from src.infra.sqlalchemy.config.database import criar_bd, get_db
-from src.infra.sqlalchemy.repository.produto import RepositorioProduto
-from src.infra.sqlalchemy.repository.usuario import RepositorioUsuario
+from src.infra.sqlalchemy.repository.repositorio_produto import RepositorioProduto
+from src.infra.sqlalchemy.repository.repositorio_usuario import RepositorioUsuario
 
 # criar_bd()
 
@@ -23,6 +23,18 @@ async def criar_produto(produto: Produto, db: Session = Depends(get_db)):
 async def listar_produtos(db: Session = Depends(get_db)) -> Sequence[Produto]:
     produtos = RepositorioProduto(db).listar()
     return produtos
+
+
+@appl.put("/produtos", response_model=Produto)
+def editar_usuario(produto: Produto, session: Session = Depends(get_db)):
+    RepositorioProduto(session).editar(produto)
+    return produto
+
+
+@appl.delete("/produtos/{id}")
+def remover_produto(id: int, session: Session = Depends(get_db)):
+    RepositorioProduto(session).remover(id)
+    return
 
 
 # USUÁRIOS
