@@ -1,11 +1,7 @@
-from typing import Sequence
-from fastapi import FastAPI, Depends, status
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
-from src.schemas.schemas import Produto, ProdutoSimples, Usuario
-from src.infra.sqlalchemy.config.database import criar_bd, get_db
-from src.infra.sqlalchemy.repository.repositorio_produto import RepositorioProduto
-from src.infra.sqlalchemy.repository.repositorio_usuario import RepositorioUsuario
+
+from src.routers import router_produtos, router_usuarios
 
 # criar_bd()
 
@@ -25,44 +21,8 @@ appl.add_middleware(
     allow_headers=["*"],
 )
 
-# PRODUIOS
+# Rotas PRODUIOS
+appl.include_router(router_produtos.router)
 
-
-@appl.post("/produtos", status_code=status.HTTP_201_CREATED)
-async def criar_produto(produto: Produto, db: Session = Depends(get_db)):
-    produto_criado = RepositorioProduto(db).criar(produto)
-    return produto_criado
-
-
-@appl.get("/produtos", status_code=status.HTTP_200_OK)
-async def listar_produtos(db: Session = Depends(get_db)) -> Sequence[Produto]:
-    produtos = RepositorioProduto(db).listar()
-    return produtos
-
-
-@appl.put("/produtos/{id}", response_model=ProdutoSimples)
-def editar_usuario(id: int, produto: Produto, session: Session = Depends(get_db)):
-    RepositorioProduto(session).editar(id, produto)
-    produto.id = id
-    return produto
-
-
-@appl.delete("/produtos/{id}")
-def remover_produto(id: int, session: Session = Depends(get_db)):
-    RepositorioProduto(session).remover(id)
-    return
-
-
-# USUÁRIOS
-
-
-@appl.post("/signup", status_code=status.HTTP_201_CREATED)
-def signup(usuario: Usuario, session: Session = Depends(get_db)):
-    usuario_criado = RepositorioUsuario(session).criar(usuario)
-    return usuario_criado
-
-
-@appl.get("/usuarios", response_model=Sequence[Usuario])
-def listar_usuarios(session: Session = Depends(get_db)) -> Sequence[Usuario]:
-    usuarios = RepositorioUsuario(session).listar()
-    return usuarios
+# Rotas USUÁRIOS
+appl.include_router(router_usuarios.router)
