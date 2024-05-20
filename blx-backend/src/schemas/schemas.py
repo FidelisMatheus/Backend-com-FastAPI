@@ -60,3 +60,6 @@ class Pedido(BaseModel):
 
     usuario: Optional[UsuarioSimples] = None
     produto: Optional[ProdutoSimples] = None
+
+    class Config:
+        from_attributes = True

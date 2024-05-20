@@ -33,7 +33,7 @@ class RepositorioProduto:
 
     def buscarPorId(self, id: int):
         query = select(models.Produto).where(models.Produto.id == id)
-        produto = self.session.execute(query).first()
+        produto = self.session.execute(query).one()
         return produto
 
     def editar(self, id: int, produto: schemas.Produto):

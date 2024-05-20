@@ -8,8 +8,10 @@ from src.infra.sqlalchemy.repository.repositorio_produto import RepositorioProdu
 router = APIRouter()
 
 
-@router.get("/produtos", status_code=status.HTTP_200_OK)
-async def listar_produtos(
+@router.get(
+    "/produtos", status_code=status.HTTP_200_OK, response_model=list[ProdutoSimples]
+)
+def listar_produtos(
     session: Session = Depends(get_db),
 ) -> Sequence[ProdutoSimples]:
     produtos = RepositorioProduto(session).listar()
