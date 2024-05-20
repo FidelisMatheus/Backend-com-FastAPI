@@ -55,3 +55,7 @@ retorne no schema que eu passar
 Utiliza-se o alembic no SQLAlchemy
 Instalei pelo powershell admin -> pip install alembic
 Depois iniciamos na aplicação blx - alembic init alembic
+
+## 43 - Hash e BCrypt
+pip install passlib[bcrypt]
+pip install 
