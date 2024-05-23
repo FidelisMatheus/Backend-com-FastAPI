@@ -1,8 +1,10 @@
 from typing import Sequence
 from fastapi import APIRouter, status, Depends, HTTPException
 from sqlalchemy.orm import Session
+
+from src.routers.auth_utils import obter_usuario_logado
 from src.infra.sqlalchemy.config.database import get_db
-from src.schemas.schemas import Pedido
+from src.schemas.schemas import Pedido, Usuario
 from src.infra.sqlalchemy.repository.repositorio_pedido import RepositorioPedido
 
 router = APIRouter()
@@ -26,11 +28,19 @@ def exibir_pedido(id: int, session: Session = Depends(get_db)):
         )
 
 
-@router.get("/pedidos/{usuario_id}/compras", response_model=list[Pedido])
+@router.get("/pedidos", response_model=list[Pedido])
 def listar_pedidos(
-    usuario_id: int, session: Session = Depends(get_db)
+    usuario: Usuario = Depends(obter_usuario_logado), session: Session = Depends(get_db)
 ) -> Sequence[Pedido]:
-    pedidos = RepositorioPedido(session).listar_meus_pedidos_por_usuario_id(usuario_id)
+    if usuario.id is not None:
+        pedidos = RepositorioPedido(session).listar_meus_pedidos_por_usuario_id(
+            usuario.id
+        )
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_501_NOT_IMPLEMENTED,
+            detail=f"Erro no usuário id= {id}",
+        )
     return pedidos
 
 
