@@ -59,3 +59,7 @@ Depois iniciamos na aplicação blx - alembic init alembic
 ## 43 - Hash e BCrypt
 pip install passlib[bcrypt] - Hash Senha
 pip install python-jose[cryptography] - Criar JWT
+
+#48 Background Tasks
+Celery
+BullMQ
