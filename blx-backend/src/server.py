@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.routers import router_produtos, router_auth, router_pedidos
 from starlette.middleware.base import BaseHTTPMiddleware
 from src.middlewares.timer import processar_tempo_requisicao
+from src.jobs.write_notification import write_notification
 
 # criar_bd()
 
@@ -33,6 +34,13 @@ appl.include_router(router_auth.router, prefix="/auth")
 
 # Rotas PEDIDOS
 appl.include_router(router_pedidos.router)
+
+
+@appl.post("/send_email/{email}")
+def send_email(email: str, background: BackgroundTasks):
+    background.add_task(write_notification, email, "Olá tudo bem?!")
+
+    return {"OK": "Mensagem enviada"}
 
 
 # middlewares

@@ -63,3 +63,6 @@ pip install python-jose[cryptography] - Criar JWT
 #48 Background Tasks
 Celery
 BullMQ
+Kafka
+
+Mas o fastapi tem isso nativo !
